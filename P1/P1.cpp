@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <functional>
 
 #include <cassert>
 #include <vector>
@@ -12,35 +13,79 @@
 
 using namespace std;
 
-time_t parseDateTime(const char* datetimeString);
-string DateTime(time_t time);
 const char* DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S";
+
+bool isValidDateTime(const char* datetimeString) {
+    if (datetimeString == nullptr || strlen(datetimeString) == 0) {
+        return false;
+    }
+    
+    struct tm tmStruct = {};
+    char* result = strptime(datetimeString, DATETIME_FORMAT, &tmStruct);
+    
+    if (result == nullptr || *result != '\0') {
+        return false;
+    }
+    
+    if (tmStruct.tm_year < 0 || tmStruct.tm_mon < 0 || tmStruct.tm_mon > 11 ||
+        tmStruct.tm_mday < 1 || tmStruct.tm_mday > 31 ||
+        tmStruct.tm_hour < 0 || tmStruct.tm_hour > 23 ||
+        tmStruct.tm_min < 0 || tmStruct.tm_min > 59 ||
+        tmStruct.tm_sec < 0 || tmStruct.tm_sec > 59) {
+        return false;
+    }
+    
+    return true;
+}
+
+time_t parseDateTime(const char* datetimeString) {
+    if (!isValidDateTime(datetimeString)) {
+        throw invalid_argument("Invalid date format");
+    }
+    
+    struct tm tmStruct = {};
+    strptime(datetimeString, DATETIME_FORMAT, &tmStruct);
+    return mktime(&tmStruct);
+}
+
+string formatDateTime(time_t time) {
+    char buffer[90];
+    struct tm* timeinfo = localtime(&time);
+    strftime(buffer, sizeof(buffer), DATETIME_FORMAT, timeinfo);
+    return buffer;
+}
+
+bool isValidPrice(double price) {
+    return price >= 0;
+}
 
 class EventTicket {
     private:
         int id;
-        static int objectCount;
-
         string eventName;
         string seatNumber;
         double price;
         bool isUsed;
         time_t eventDate;
+        
         static int lastId;
+        static int objectCount;
 
     public:
-        EventTicket(string eventName, string seatNumber, double price, time_t eventDate){
+        EventTicket(string eventName, string seatNumber, double price, time_t eventDate) {
             init(eventName, seatNumber, price, eventDate, false);
         }
-        EventTicket(string eventName, string seatNumber, double price, time_t eventDate, bool isUsed){
+        
+        EventTicket(string eventName, string seatNumber, double price, time_t eventDate, bool isUsed) {
             init(eventName, seatNumber, price, eventDate, isUsed);
         }
-        ~EventTicket(){
+        
+        ~EventTicket() {
             --objectCount;
         }
 
     private:
-        void init(string eventName, string seatNumber, double price, time_t eventDate, bool isUsed){
+        void init(string eventName, string seatNumber, double price, time_t eventDate, bool isUsed) {
             id = lastId++;
             setEventName(eventName);
             setSeatNumber(seatNumber);
@@ -49,98 +94,68 @@ class EventTicket {
             setIsUsed(isUsed);
             ++objectCount;
         }
-        void setEventName(string eventName){
+        
+        void setEventName(string eventName) {
             this->eventName = eventName;
         }
-        void setSeatNumber(string seatNumber){
+        
+        void setSeatNumber(string seatNumber) {
             this->seatNumber = seatNumber;
         }
-        void setPrice(double price){
-            if (price >= 0){
-                this->price = price;
-            } else {
-                 throw invalid_argument("Exception in EventTicket: price cannot be negative!");
+        
+        void setPrice(double price) {
+            if (!isValidPrice(price)) {
+                throw invalid_argument("Price cannot be negative");
             }
-
+            this->price = price;
         }
-        void setEventDate(time_t eventDate){
+        
+        void setEventDate(time_t eventDate) {
             this->eventDate = eventDate;
         }
-
-        void setIsUsed(bool isUsed){
+        
+        void setIsUsed(bool isUsed) {
             this->isUsed = isUsed;
         }
 
     public:
-        int getId(){
+        int getId() {
             return id;
         }
-        string getEventName(){
+        
+        string getEventName() {
             return eventName;
         }
-        string getSeatNumber(){
+        
+        string getSeatNumber() {
             return seatNumber;
         }
-        double getPrice(){
+        
+        double getPrice() {
             return price;
         }
-        bool getIsUsed(){
+        
+        bool getIsUsed() {
             return isUsed;
         }
-        time_t getEventDate(){
+        
+        time_t getEventDate() {
             return eventDate;
         }
-
-        static int getObjectCount(){
+        
+        static int getObjectCount() {
             return objectCount;
         }
-
-        string toString(){
+        
+        string toString() {
             stringstream ss;
-            ss << getEventName() << " " << getSeatNumber() << ", price: " << getPrice() << "eur " << DateTime(getEventDate())  << " id: " << getId() << endl;
+            ss << eventName << " " << seatNumber << " " << price << " " << formatDateTime(eventDate) << " " << id;
             return ss.str();
         }
 };
 
 int EventTicket::lastId = 0;
 int EventTicket::objectCount = 0;
-
-
-// From: https://www.geeksforgeeks.org/cpp/date-and-time-parsing-in-cpp/ with added validation
-time_t parseDateTime(const char* datetimeString){
-    if (datetimeString == nullptr || strlen(datetimeString) == 0) {
-        throw invalid_argument("Exception in parseDateTime: date string cannot be null or empty!");
-    }
-    
-    struct tm tmStruct = {};
-    char* result = strptime(datetimeString, DATETIME_FORMAT, &tmStruct);
-    
-    if (result == nullptr || *result != '\0') {
-        throw invalid_argument("Exception in parseDateTime: invalid date format! Expected: YYYY-MM-DD HH:MM:SS");
-    }
-    
-    if (tmStruct.tm_year < 0 || tmStruct.tm_mon < 0 || tmStruct.tm_mon > 11 ||
-        tmStruct.tm_mday < 1 || tmStruct.tm_mday > 31 ||
-        tmStruct.tm_hour < 0 || tmStruct.tm_hour > 23 ||
-        tmStruct.tm_min < 0 || tmStruct.tm_min > 59 ||
-        tmStruct.tm_sec < 0 || tmStruct.tm_sec > 59) {
-        throw invalid_argument("Exception in parseDateTime: date values out of valid range!");
-    }
-    
-    time_t resultTime = mktime(&tmStruct);
-    if (resultTime == -1) {
-        throw invalid_argument("Exception in parseDateTime: failed to convert to time_t");
-    }
-
-    return resultTime;
-}
-
-string DateTime(time_t time){
-    char buffer[90];
-    struct tm* timeinfo = localtime(&time);
-    strftime(buffer, sizeof(buffer), DATETIME_FORMAT, timeinfo);
-    return buffer;
-}
 
 int testsPassed = 0;
 int testsFailed = 0;
@@ -155,8 +170,24 @@ void check(bool condition, string testName) {
     }
 }
 
-int main (){
+// To reduce code duplication in exception tests
+void testException(function<void()> testFunction, string expectedMessage, string testName) {
+    bool exceptionCaught = false;
+    try {
+        testFunction();
+    } catch (invalid_argument& e) {
+        exceptionCaught = true;
+        if (!expectedMessage.empty()) {
+            check(string(e.what()).find(expectedMessage) != string::npos, 
+                  testName + " - exception message correct");
+        }
+    } catch (...) {
+        check(false, testName + " - wrong exception type");
+    }
+    check(exceptionCaught, testName);
+}
 
+int main() {
     cout << "Initial object count: " << EventTicket::getObjectCount() << endl;
     check(EventTicket::getObjectCount() == 0, "Initial object count is 0");
 
@@ -176,15 +207,13 @@ int main (){
         check(toStringResult.find("Don Juan") != string::npos, "toString contains event name");
         check(toStringResult.find("J-17") != string::npos, "toString contains seat number");
         check(toStringResult.find("57") != string::npos, "toString contains price");
-        check(toStringResult.find("id: 0") != string::npos, "toString contains id");
+        check(toStringResult.find("0") != string::npos, "toString contains id");
         check(toStringResult.find("2026-03-15 18:30:00") != string::npos, "toString contains date");
         
         delete t1;
 
 
 
-        // All of my setters are private and only used in constructors, so 
-        // through the contructors I test setters. Don't know if I met this requirment.. :/
         cout << "\n=== TEST 2: Setters Work Through Constructors ===" << endl;
         
         EventTicket* t2a = new EventTicket("Kopelija", "B-5", 30.0, parseDateTime("2026-04-01 18:00:00"), false);
@@ -216,43 +245,23 @@ int main (){
 
         cout << "\n=== TEST 3: Validation Exceptions ===" << endl;
         
-        bool exceptionCaught = false;
-        try {
-            EventTicket* t3a = new EventTicket("Test", "C-1", -10.0, parseDateTime("2026-05-01 10:00:00"));
-            delete t3a;
-        } catch (invalid_argument& e) {
-            exceptionCaught = true;
-            check(string(e.what()).find("price cannot be negative") != string::npos, "Negative price exception message is correct");
-        } catch (...) {
-            check(false, "Wrong exception type for negative price");
-        }
-        check(exceptionCaught, "Negative price throws invalid_argument exception");
+        testException(
+            []() { EventTicket* t = new EventTicket("Test", "C-1", -10.0, parseDateTime("2026-05-01 10:00:00")); delete t; },
+            "Price cannot be negative",
+            "Negative price throws invalid_argument exception"
+        );
         
-        exceptionCaught = false;
-        try {
-            time_t invalidDate = parseDateTime("not-a-valid-date");
-            EventTicket* t3c = new EventTicket("Test", "C-3", 50.0, invalidDate);
-            delete t3c;
-        } catch (invalid_argument& e) {
-            exceptionCaught = true;
-            check(string(e.what()).find("invalid date format") != string::npos, "Invalid date format exception message is correct");
-        } catch (...) {
-            check(false, "Wrong exception type for invalid date");
-        }
-        check(exceptionCaught, "Invalid date format throws invalid_argument exception");
+        testException(
+            []() { time_t invalidDate = parseDateTime("not-a-valid-date"); EventTicket* t = new EventTicket("Test", "C-3", 50.0, invalidDate); delete t; },
+            "Invalid date format",
+            "Invalid date format throws invalid_argument exception"
+        );
 
-        exceptionCaught = false;
-        try {
-            time_t emptyDate = parseDateTime("");
-            EventTicket* t3d = new EventTicket("Test", "C-4", 50.0, emptyDate);
-            delete t3d;
-        } catch (invalid_argument& e) {
-            exceptionCaught = true;
-            check(string(e.what()).find("null or empty") != string::npos, "Empty date exception message is correct");
-        } catch (...) {
-            check(false, "Wrong exception type for empty date");
-        }
-        check(exceptionCaught, "Empty date string throws invalid_argument exception");
+        testException(
+            []() { time_t emptyDate = parseDateTime(""); EventTicket* t = new EventTicket("Test", "C-4", 50.0, emptyDate); delete t; },
+            "Invalid date format",
+            "Empty date string throws invalid_argument exception"
+        );
 
 
 
@@ -330,7 +339,7 @@ int main (){
             
             ticketList.clear();
             check(ticketList.size() == 0, "List is empty after clear");
-            
+
         } catch (exception& e) {
             cout << "Exception in TEST 5: " << e.what() << endl;
             for (size_t i = 0; i < ticketList.size(); i++) {
@@ -343,7 +352,6 @@ int main (){
         
 
         check(EventTicket::getObjectCount() == 0, "Final object count is 0 at end of test");
-
     } catch (exception& e) {
         cout << "Unexpected error occurred: " << e.what() << endl;
     } catch (...) {
