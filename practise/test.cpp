@@ -6,7 +6,6 @@ using namespace std;
 
 class Student {
     private:
-
         int id;
         string name, surname;
         int year;
@@ -77,6 +76,7 @@ class Student {
             return ss.str();
         }
 };
+
 int Student::lastId = 0;
 int Student::objectCount = 0;
 
