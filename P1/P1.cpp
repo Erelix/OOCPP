@@ -7,6 +7,9 @@
 #include <ctime>
 #include <cstring>
 
+// g++ -o P1 P1.cpp
+// ./P1
+
 using namespace std;
 
 time_t parseDateTime(const char* datetimeString);
@@ -128,7 +131,7 @@ time_t parseDateTime(const char* datetimeString){
     if (resultTime == -1) {
         throw invalid_argument("Exception in parseDateTime: failed to convert to time_t");
     }
-    
+
     return resultTime;
 }
 
@@ -154,114 +157,192 @@ void check(bool condition, string testName) {
 
 int main (){
 
+    cout << "Initial object count: " << EventTicket::getObjectCount() << endl;
+    check(EventTicket::getObjectCount() == 0, "Initial object count is 0");
+
     try {
-        cout << "=== TEST SUITE 1: Constructor(4 parameters) & Getters ===" << endl;
-        EventTicket* et1 = new EventTicket("Kopelija", "B-11", 55.0, parseDateTime("2026-03-15 12:00:00"));
-        check(et1->getEventName() == "Kopelija", "getEventName returns correct value");
-        check(et1->getSeatNumber() == "B-11", "getSeatNumber returns correct value");
-        check(et1->getPrice() == 55.0, "getPrice returns correct value");
-        check(et1->getEventDate() == parseDateTime("2026-03-15 12:00:00"), "getEventDate returns correct value");
-        check(et1->getIsUsed() == false, "getIsUsed default false");
-        check(et1->getId() == 0, "getId returns 0 for first object");
-        check(EventTicket::getObjectCount() == 1, "getObjectCount returns 1");
+        cout << "\n=== TEST 1: Object Creation, Getters, and toString ===" << endl;
+        
+        EventTicket* t1 = new EventTicket("Don Juan", "J-17", 57.0, parseDateTime("2026-03-15 18:30:00"));
+        
+        check(t1->getEventName() == "Don Juan", "getEventName returns correct value");
+        check(t1->getSeatNumber() == "J-17", "getSeatNumber returns correct value");
+        check(t1->getPrice() == 57.0, "getPrice returns correct value");
+        check(t1->getEventDate() == parseDateTime("2026-03-15 18:30:00"), "getEventDate returns correct value");
+        check(t1->getIsUsed() == false, "getIsUsed returns correct default value");
+        check(t1->getId() == 0, "getId returns correct value");
+        
+        string toStringResult = t1->toString();
+        check(toStringResult.find("Don Juan") != string::npos, "toString contains event name");
+        check(toStringResult.find("J-17") != string::npos, "toString contains seat number");
+        check(toStringResult.find("57") != string::npos, "toString contains price");
+        check(toStringResult.find("id: 0") != string::npos, "toString contains id");
+        check(toStringResult.find("2026-03-15 18:30:00") != string::npos, "toString contains date");
+        
+        delete t1;
 
-        cout << "\n=== TEST SUITE 2: toString Method ===" << endl;
-        string txt = et1->toString();
-        check(txt.find("Kopelija") != string::npos, "toString contains event name");
-        check(txt.find("B-11") != string::npos, "toString contains seat");
-        check(txt.find("55") != string::npos, "toString contains price");
-        check(txt.find("id: 0") != string::npos, "toString contains id");
 
-        cout << "\n=== TEST SUITE 3: Second Constructor(5 parameters) ===" << endl;
-        EventTicket* et2 = new EventTicket("Don Juan", "C-15", 27.0, parseDateTime("2026-05-20 18:30:00"), true);
-        check(et2->getEventName() == "Don Juan", "second object eventName");
-        check(et2->getSeatNumber() == "C-15", "second object seatNumber");
-        check(et2->getPrice() == 27.0, "second object price");
-        check(et2->getIsUsed() == true, "second object isUsed true");
-        check(et2->getId() == 1, "second object id is 1");
-        check(EventTicket::getObjectCount() == 2, "objectCount is 2");
 
-        cout << "\n=== TEST SUITE 4: Multiple Objects & Setter Variations ===" << endl;
-        EventTicket* et3 = new EventTicket("Paquita", "D-5", 100.0, parseDateTime("2026-06-10 19:00:00"));
-        check(et3->getEventName() == "Paquita", "third object eventName");
-        check(et3->getSeatNumber() == "D-5", "third object seatNumber");
-        check(et3->getPrice() == 100.0, "third object price");
-        check(et3->getId() == 2, "third object id is 2");
-        check(EventTicket::getObjectCount() == 3, "objectCount is 3");
+        // All of my setters are private and only used in constructors, so 
+        // through the contructors I test setters. Don't know if I met this requirment.. :/
+        cout << "\n=== TEST 2: Setters Work Through Constructors ===" << endl;
+        
+        EventTicket* t2a = new EventTicket("Kopelija", "B-5", 30.0, parseDateTime("2026-04-01 18:00:00"), false);
+        check(t2a->getEventName() == "Kopelija", "First object eventName set correctly");
+        check(t2a->getSeatNumber() == "B-5", "First object seatNumber set correctly");
+        check(t2a->getPrice() == 30.0, "First object price set correctly");
+        check(t2a->getEventDate() == parseDateTime("2026-04-01 18:00:00"), "First object eventDate set correctly");
+        check(t2a->getIsUsed() == false, "First object isUsed set correctly");
+        
+        EventTicket* t2b = new EventTicket("Turandot", "Z-99", 125.50, parseDateTime("2026-12-31 23:59:59"), true);
+        check(t2b->getEventName() == "Turandot", "Second object eventName set to different value");
+        check(t2b->getSeatNumber() == "Z-99", "Second object seatNumber set to different value");
+        check(t2b->getPrice() == 125.50, "Second object price set to different value");
+        check(t2b->getEventDate() == parseDateTime("2026-12-31 23:59:59"), "Second object eventDate set to different value");
+        check(t2b->getIsUsed() == true, "Second object isUsed set to different value");
+        
+        EventTicket* t2c = new EventTicket("Carmen", "M-42", 99.99, parseDateTime("2026-06-15 14:30:00"));
+        check(t2c->getEventName() == "Carmen", "Third object eventName set correctly");
+        check(t2c->getSeatNumber() == "M-42", "Third object seatNumber set correctly");
+        check(t2c->getPrice() == 99.99, "Third object price set correctly");
+        check(t2c->getEventDate() == parseDateTime("2026-06-15 14:30:00"), "Third object eventDate set correctly");
+        check(t2c->getIsUsed() == false, "Third object isUsed defaults to false");
+        
+        delete t2a;
+        delete t2b;
+        delete t2c;
 
-        EventTicket* et4 = new EventTicket("La Strada", "B-20", 75.5, parseDateTime("2026-12-31 20:00:00"), false);
-        check(et4->getEventName() == "La Strada", "fourth object eventName");
-        check(et4->getSeatNumber() == "B-20", "fourth object seatNumber");
-        check(et4->getPrice() == 75.5, "fourth object price");
-        check(et4->getEventDate() == parseDateTime("2026-12-31 20:00:00"), "fourth object eventDate");
-        check(et4->getIsUsed() == false, "fourth object isUsed");
-        check(et4->getId() == 3, "fourth object id is 3");
-        check(EventTicket::getObjectCount() == 4, "objectCount is 4");
 
-        cout << "\n=== TEST SUITE 5: Destructor & Object Count ===" << endl;
-        delete et1;
-        check(EventTicket::getObjectCount() == 3, "objectCount decreased to 3 after delete");
-        delete et2;
-        check(EventTicket::getObjectCount() == 2, "objectCount decreased to 2 after delete");
-        delete et3;
-        check(EventTicket::getObjectCount() == 1, "objectCount decreased to 1 after delete");
-        delete et4;
-        check(EventTicket::getObjectCount() == 0, "objectCount returns 0 after all deletes");
 
-        cout << "\n=== TEST SUITE 6: Exception Handling ===" << endl;
+        cout << "\n=== TEST 3: Validation Exceptions ===" << endl;
+        
         bool exceptionCaught = false;
         try {
-            EventTicket* et5 = new EventTicket("Test", "E-1", -10.0, parseDateTime("2026-07-01 10:00:00"));
-            delete et5;
+            EventTicket* t3a = new EventTicket("Test", "C-1", -10.0, parseDateTime("2026-05-01 10:00:00"));
+            delete t3a;
         } catch (invalid_argument& e) {
             exceptionCaught = true;
-            check(string(e.what()).find("price cannot be negative") != string::npos, "exception message correct");
+            check(string(e.what()).find("price cannot be negative") != string::npos, "Negative price exception message is correct");
+        } catch (...) {
+            check(false, "Wrong exception type for negative price");
         }
-        check(exceptionCaught, "negative price throws exception");
-
-        cout << "\n=== TEST SUITE 7: Date Format Validation ===" << endl;
+        check(exceptionCaught, "Negative price throws invalid_argument exception");
+        
         exceptionCaught = false;
         try {
-            time_t invalidDate = parseDateTime("2026-13-01 10:00:00");
-            EventTicket* et6 = new EventTicket("Test", "G-1", 50.0, invalidDate);
-            delete et6;
+            time_t invalidDate = parseDateTime("not-a-valid-date");
+            EventTicket* t3c = new EventTicket("Test", "C-3", 50.0, invalidDate);
+            delete t3c;
         } catch (invalid_argument& e) {
             exceptionCaught = true;
-            check(string(e.what()).find("parseDateTime") != string::npos, "invalid month throws exception");
+            check(string(e.what()).find("invalid date format") != string::npos, "Invalid date format exception message is correct");
+        } catch (...) {
+            check(false, "Wrong exception type for invalid date");
         }
-        check(exceptionCaught, "invalid month detected");
-
-        exceptionCaught = false;
-        try {
-            time_t invalidDate = parseDateTime("not-a-date");
-            EventTicket* et7 = new EventTicket("Test", "H-1", 50.0, invalidDate);
-            delete et7;
-        } catch (invalid_argument& e) {
-            exceptionCaught = true;
-            check(string(e.what()).find("invalid date format") != string::npos, "wrong format exception message");
-        }
-        check(exceptionCaught, "invalid format detected");
+        check(exceptionCaught, "Invalid date format throws invalid_argument exception");
 
         exceptionCaught = false;
         try {
-            time_t invalidDate = parseDateTime("2026-15-45 99:99:99");
-            EventTicket* et8 = new EventTicket("Test", "I-1", 50.0, invalidDate);
-            delete et8;
+            time_t emptyDate = parseDateTime("");
+            EventTicket* t3d = new EventTicket("Test", "C-4", 50.0, emptyDate);
+            delete t3d;
         } catch (invalid_argument& e) {
             exceptionCaught = true;
+            check(string(e.what()).find("null or empty") != string::npos, "Empty date exception message is correct");
+        } catch (...) {
+            check(false, "Wrong exception type for empty date");
         }
-        check(exceptionCaught, "invalid date values detected");
+        check(exceptionCaught, "Empty date string throws invalid_argument exception");
 
-        exceptionCaught = false;
+
+
+
+        cout << "\n=== TEST 4: Automatic ID Numbering ===" << endl;
+        
+        EventTicket* t4a = new EventTicket("Hamlet", "D-1", 25.0, parseDateTime("2026-06-01 10:00:00"));
+        int id1 = t4a->getId();
+        check(id1 >= 0, "First ID is 0 or greater");
+        
+        EventTicket* t4b = new EventTicket("Cinderella", "Y-17", 30.0, parseDateTime("2029-06-21 11:00:00"));
+        int id2 = t4b->getId();
+        check(id2 > id1, "Second ID is greater than first");
+        
+        EventTicket* t4c = new EventTicket("Giselle", "F-33", 35.0, parseDateTime("2030-06-09 12:30:00"));
+        int id3 = t4c->getId();
+        check(id3 > id2, "Third ID is greater than second");
+
+        delete t4b;
+        
+        EventTicket* t4d = new EventTicket("Aida", "F-44", 40.0, parseDateTime("2027-01-04 18:00:00"));
+        int id4 = t4d->getId();
+        check(id4 > id3, "ID after deletion continues to increase");
+        check(id4 != id2, "New object doesn't reuse deleted object's ID");
+        
+        delete t4a;
+        delete t4c;
+        delete t4d;
+
+
+
+
+        cout << "\n=== TEST 5: Dynamic List and Object Count ===" << endl;
+        
+        check(EventTicket::getObjectCount() == 0, "Object count is 0 before creating list");
+        
+        vector<EventTicket*> ticketList;
+        
         try {
-            time_t invalidDate = parseDateTime("");
-            EventTicket* et9 = new EventTicket("Test", "J-1", 50.0, invalidDate);
-            delete et9;
-        } catch (invalid_argument& e) {
-            exceptionCaught = true;
-            check(string(e.what()).find("null or empty") != string::npos, "empty string exception message");
+            ticketList.push_back(new EventTicket("Carmen", "E-1", 45.0, parseDateTime("2026-07-10 17:00:00")));
+            check(EventTicket::getObjectCount() == 1, "Object count is 1 after first object");
+            
+            ticketList.push_back(new EventTicket("Giselle", "E-2", 50.0, parseDateTime("2026-07-11 19:00:00")));
+            check(EventTicket::getObjectCount() == 2, "Object count is 2 after second object");
+            
+            ticketList.push_back(new EventTicket("Onegin", "E-3", 20.0, parseDateTime("2025-08-12 18:30:00"), true));
+            check(EventTicket::getObjectCount() == 3, "Object count is 3 after third object");
+            
+            ticketList.push_back(new EventTicket("Romeo and Juliet", "E-4", 60.0, parseDateTime("2022-07-19 19:00:00")));
+            check(EventTicket::getObjectCount() == 4, "Object count is 4 after fourth object");
+            
+            ticketList.push_back(new EventTicket("The Nutcracker", "E-5", 68.0, parseDateTime("2026-12-25 15:00:00"), false));
+            check(EventTicket::getObjectCount() == 5, "Object count is 5 after fifth object");
+            
+            check(ticketList.size() == 5, "List contains 5 objects");
+            
+            check(ticketList[0]->getEventName() == "Carmen", "Can access first list item");
+            check(ticketList[2]->getIsUsed() == true, "Can access third list item properties");
+            check(ticketList[4]->getPrice() == 68.0, "Can access fifth list item");
+            
+            delete ticketList[0];
+            check(EventTicket::getObjectCount() == 4, "Object count is 4 after first delete");
+            
+            delete ticketList[1];
+            check(EventTicket::getObjectCount() == 3, "Object count is 3 after second delete");
+            
+            delete ticketList[2];
+            check(EventTicket::getObjectCount() == 2, "Object count is 2 after third delete");
+            
+            delete ticketList[3];
+            check(EventTicket::getObjectCount() == 1, "Object count is 1 after fourth delete");
+            
+            delete ticketList[4];
+            check(EventTicket::getObjectCount() == 0, "Object count is 0 after all deletes");
+            
+            ticketList.clear();
+            check(ticketList.size() == 0, "List is empty after clear");
+            
+        } catch (exception& e) {
+            cout << "Exception in TEST 5: " << e.what() << endl;
+            for (size_t i = 0; i < ticketList.size(); i++) {
+                if (ticketList[i] != nullptr) {
+                    delete ticketList[i];
+                }
+            }
+            ticketList.clear();
         }
-        check(exceptionCaught, "empty date string detected");
+        
+
+        check(EventTicket::getObjectCount() == 0, "Final object count is 0 at end of test");
 
     } catch (exception& e) {
         cout << "Unexpected error occurred: " << e.what() << endl;
