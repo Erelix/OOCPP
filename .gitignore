@@ -1,0 +1,19 @@
+# Ignore the intentionally broken version
+P1/EventTicket_WithErrors.cpp
+
+# Compiled object files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+P1/EventTicket
+P1/P1
+practise/test
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
