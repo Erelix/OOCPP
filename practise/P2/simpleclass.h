@@ -3,12 +3,15 @@
 
 #include <stdexcept>
 
-//using std::logic_error;
+using std::logic_error;
 
-using namespace std;
+//using namespace std;
 
+#define string std::string
 
-class NotInitializedException : public logic_error {
+namespace MySpace {
+
+class NotInitializedException : public std::logic_error {
     public:
         NotInitializedException(const string &className);
         
@@ -33,10 +36,15 @@ class Student {
         string getName() const;
         string getSurname() const;
         int getYear() const;
+        
         string toString() const;
+        
+        #undef string
 
-        friend ostream& operator<<(std::ostream& out, const Student& s);
-        friend istream& operator>>(std::istream& in, Student& s);
+        friend std::ostream& operator<<(std::ostream& out, const Student& s);
+        friend std::istream& operator>>(std::istream& in, Student& s);
 };
+}
+
 
 #endif

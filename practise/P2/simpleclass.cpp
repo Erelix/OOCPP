@@ -1,11 +1,9 @@
-#include <iostream>
-#include <sstream>
-#include <stdexcept>
-#include <exception>
-
+#include "all.h"
 #include "simpleclass.h"
 
 using namespace std;
+
+namespace MySpace {
 
 NotInitializedException::NotInitializedException(const string &className) : logic_error(string("Not initialized: class") + className){
 }
@@ -220,9 +218,11 @@ istream& operator>>(istream& in, Student& s){
 }
 
 
-
+}
 
 int main(){
+
+    using namespace MySpace;
 
     try {
         const Student s0("Adrian", "Klimasevski", 3);
