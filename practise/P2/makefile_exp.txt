@@ -1,0 +1,28 @@
+CC = g++
+
+all : test_mod1.exe test_mod2.exe
+main.exe
+
+main.exe : main.cpp mod1.o mod2.o
+    ${CC} -DRUN_MAIN main.cpp mod1.o mod2.o
+    -o main.exe
+
+test_mod1 : mod1.cpp mod1.h
+    ${CC} -DTEST_MODULE mod1.cpp -o
+    test_mod1.exe
+
+mod1.o : mod1.cpp mod1.h
+    ${CC} -c mod1.cpp -o mod1.o
+
+
+test_mod2 : mod2.cpp mod2.h
+    ${CC} -DTEST_MODULE mod1.cpp -o
+    test_mod2.exe
+
+mod2.o : mod2.cpp mod2.h
+    ${CC} -c mod2.cpp -o mod2.o
+
+clean :
+    del /f *.o *.exe
+
+rebuild : clean all
