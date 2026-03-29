@@ -11,7 +11,15 @@ private:
         int priority;
         Node *next;
         
-        Node(int d, int p) : data(d), priority(p), next(nullptr) {}
+        static int nodeCount;
+        
+        Node(int d, int p) : data(d), priority(p), next(nullptr) {
+            nodeCount++;
+        }
+        
+        ~Node() {
+            nodeCount--;
+        }
     };
 
     Node *head;
@@ -182,15 +190,26 @@ public:
         }
         return ss.str();
     }
+
+    static int getNodeCountValue() {
+        return Node::nodeCount;
+    }
 };
 
+int PriorityQueue::Inner::Node::nodeCount = 0;
 
 
 
-// PriorityQueue Public Methods
 
-PriorityQueue::PriorityQueue() : impl(new Inner()) {}
-PriorityQueue::PriorityQueue(const PriorityQueue &other) : impl(new Inner(*other.impl)) {}
+int PriorityQueue::instanceCount = 0;
+
+PriorityQueue::PriorityQueue() : impl(new Inner()) {
+    instanceCount++;
+}
+
+PriorityQueue::PriorityQueue(const PriorityQueue &other) : impl(new Inner(*other.impl)) {
+    instanceCount++;
+}
 
 const PriorityQueue& PriorityQueue::operator=(const PriorityQueue &other) {
     if (this != &other) {
@@ -202,6 +221,7 @@ const PriorityQueue& PriorityQueue::operator=(const PriorityQueue &other) {
 
 PriorityQueue::~PriorityQueue() {
     delete impl;
+    instanceCount--;
 }
 
 void PriorityQueue::insert(int data, int priority) {
@@ -285,6 +305,14 @@ void PriorityQueue::print() const {
 ostream& operator<<(ostream &out, const PriorityQueue &pq) {
     out << pq.toString();
     return out;
+}
+
+int PriorityQueue::getInstanceCount() {
+    return instanceCount;
+}
+
+int PriorityQueue::getNodeCount() {
+    return Inner::getNodeCountValue();
 }
 
 }

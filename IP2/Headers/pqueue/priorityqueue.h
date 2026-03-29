@@ -15,6 +15,8 @@ private:
     class Inner;
     Inner *impl;
 
+    static int instanceCount;
+
 public:
     PriorityQueue();
     PriorityQueue(const PriorityQueue &other);
@@ -52,6 +54,12 @@ public:
     std::string toString() const;
     
     void print() const;
+
+    // Memory tracking - static counter for all instances
+    static int getInstanceCount();
+
+    // Node memory tracking - static counter for all internal nodes
+    static int getNodeCount();
 
     friend std::ostream& operator<<(std::ostream &out, const PriorityQueue &pq);
 };
