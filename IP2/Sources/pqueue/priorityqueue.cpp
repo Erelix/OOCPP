@@ -244,6 +244,18 @@ bool PriorityQueue::isEmpty() const {
     return impl->isEmpty();
 }
 
+PriorityQueue PriorityQueue::operator+(const std::pair<int, int> &element) const {
+    PriorityQueue result(*this);
+    result.impl->insert(element.first, element.second);
+    return result;
+}
+
+PriorityQueue PriorityQueue::operator-(int data) const {
+    PriorityQueue result(*this);
+    result.impl->removeByValue(data);
+    return result;
+}
+
 PriorityQueue& PriorityQueue::operator+=(const std::pair<int, int> &element) {
     impl->insert(element.first, element.second);
     return *this;
@@ -263,7 +275,7 @@ int PriorityQueue::operator%=(const std::pair<int, int> &updatePair) {
 }
 
 bool PriorityQueue::operator==(const PriorityQueue &other) const {
-    return impl->equals(*other.impl);
+    return impl->size() == other.impl->size();
 }
 
 bool PriorityQueue::operator!=(const PriorityQueue &other) const {

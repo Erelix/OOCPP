@@ -29,145 +29,161 @@
 [ 16] PASS New high-priority element becomes peek
 [ 17] PASS Size is 2
 
+--- Suite 4a: Operator + (Non-modifying Insert) ---
+
+[ 18] PASS Original size unchanged
+[ 19] PASS New queue has size 3
+[ 20] PASS New element has highest priority
+[ 21] PASS Original peek unchanged
+
 
 --- Suite 5: Operator -= (Delete) ---
 
-[ 18] PASS Size reduced to 2 after delete
-[ 19] PASS Deleted element not found (returns -1)
-[ 20] PASS Size is 1
-[ 21] PASS Remaining element is correct
+[ 22] PASS Size reduced to 2 after delete
+[ 23] PASS Deleted element not found (returns -1)
+[ 24] PASS Size is 1
+[ 25] PASS Remaining element is correct
+
+
+--- Suite 5a: Operator - (Non-modifying Delete) ---
+
+[ 26] PASS Original size unchanged
+[ 27] PASS New queue has size 2
+[ 28] PASS Original still contains element 20
+[ 29] PASS New queue doesn't have element 20
+[ 30] PASS New queue peek is correct
 
 
 --- Suite 6: Operator[] (Search) ---
 
-[ 22] PASS Search finds priority of element 100
-[ 23] PASS Search finds priority of element 200
-[ 24] PASS Search finds priority of element 300
-[ 25] PASS Search returns -1 for non-existent element
+[ 31] PASS Search finds priority of element 100
+[ 32] PASS Search finds priority of element 200
+[ 33] PASS Search finds priority of element 300
+[ 34] PASS Search returns -1 for non-existent element
 
 --- Suite 7: Operator *= (Update) ---
 
-[ 26] PASS Update returns new priority
-[ 27] PASS Element priority updated
-[ 28] PASS Updated element now has highest priority
-[ 29] PASS Update non-existent returns -1
+[ 35] PASS Update returns new priority
+[ 36] PASS Element priority updated
+[ 37] PASS Updated element now has highest priority
+[ 38] PASS Update non-existent returns -1
 
 --- Suite 8: Operator %= (Update Alias) ---
 
-[ 30] PASS %= operator works like *=
-[ 31] PASS Priority updated via %=
+[ 39] PASS %= operator works like *=
+[ 40] PASS Priority updated via %=
 
 --- Suite 9: Comparison Operators (==, !=, <, <=, >, >=) ---
 
-[ 32] PASS Equal queues return true for ==
-[ 33] PASS Equal queues return false for !=
-[ 34] PASS Different queues return true for !=
-[ 35] PASS Smaller queue < larger queue
-[ 36] PASS Smaller queue <= larger queue
-[ 37] PASS Larger queue > smaller queue
-[ 38] PASS Larger queue >= smaller queue
+[ 41] PASS Equal queues return true for ==
+[ 42] PASS Equal queues return false for !=
+[ 43] PASS Different queues return true for !=
+[ 44] PASS Smaller queue < larger queue
+[ 45] PASS Smaller queue <= larger queue
+[ 46] PASS Larger queue > smaller queue
+[ 47] PASS Larger queue >= smaller queue
 
 --- Suite 10: Cleanup Operator! ---
 
-[ 39] PASS Queue has 3 elements before cleanup
-[ 40] PASS Queue empty after !
-[ 41] PASS Size is 0 after cleanup
+[ 48] PASS Queue has 3 elements before cleanup
+[ 49] PASS Queue empty after !
+[ 50] PASS Size is 0 after cleanup
 
 --- Suite 11: Copy Semantics (Deep Copy) ---
 
-[ 42] PASS Copy constructor copies all elements
-[ 43] PASS Copy contains correct element data
-[ 44] PASS Assignment operator copies elements
-[ 45] PASS Original size unchanged after modifying copy
-[ 46] PASS Modified copy has new size
-[ 47] PASS Original doesn't have new element
+[ 51] PASS Copy constructor copies all elements
+[ 52] PASS Copy contains correct element data
+[ 53] PASS Assignment operator copies elements
+[ 54] PASS Original size unchanged after modifying copy
+[ 55] PASS Modified copy has new size
+[ 56] PASS Original doesn't have new element
 
 --- Suite 12: toString() Method ---
 
-[ 48] PASS toString shows size for empty queue
-[ 49] PASS toString shows correct size
-[ 50] PASS toString contains element data
+[ 57] PASS toString shows size for empty queue
+[ 58] PASS toString shows correct size
+[ 59] PASS toString contains element data
 
 --- Suite 13: Exception Handling ---
 
-[ 51] PASS EmptyQueueException thrown on dequeue from empty queue
-[ 52] PASS EmptyQueueException thrown on peek from empty queue
-[ 53] PASS InvalidPriorityException thrown for negative priority
+[ 60] PASS EmptyQueueException thrown on dequeue from empty queue
+[ 61] PASS EmptyQueueException thrown on peek from empty queue
+[ 62] PASS InvalidPriorityException thrown for negative priority
 
 --- Suite 14: Stress Test (Many Operations) ---
 
-[ 54] PASS Stress test: inserted 10 elements
-[ 55] PASS Stress test: peek returns valid element
-[ 56] PASS Stress test: size correct after dequeue
-[ 57] PASS Stress test: cleanup works
+[ 63] PASS Stress test: inserted 10 elements
+[ 64] PASS Stress test: peek returns valid element
+[ 65] PASS Stress test: size correct after dequeue
+[ 66] PASS Stress test: cleanup works
 
 --- Suite 15: Stream Output Operator ---
 
-[ 58] PASS Stream operator includes element data
-[ 59] PASS Stream operator includes size
+[ 67] PASS Stream operator includes element data
+[ 68] PASS Stream operator includes size
 
 
 --- Suite 16: Memory Leak Detection (Instance Counting) ---
 
-[ 60] PASS Instance count 1 after creating pq1
-[ 61] PASS Instance count naturally returns to 0 after pq1 destroyed
-[ 62] PASS Instance count 2 with two objects
-[ 63] PASS Instance count 3 with three objects
-[ 64] PASS Instance count 2 after pq3 destroyed
-[ 65] PASS Instance count 0 after all destroyed
-[ 66] PASS Instance count 1 after creating original
-[ 67] PASS Instance count 2 after copy constructor
-[ 68] PASS Instance count 0 after both destroyed
-[ 69] PASS Instance count 2 before assignment
-[ 70] PASS Instance count still 2 after assignment (not a new object)
-[ 71] PASS Instance count 0 after cleanup
-[ 72] PASS Instance count 5 with array of 5 objects
-[ 73] PASS Instance count 0 after array destroyed (no memory leak)
+[ 69] PASS Instance count 1 after creating pq1
+[ 70] PASS Instance count naturally returns to 0 after pq1 destroyed
+[ 71] PASS Instance count 2 with two objects
+[ 72] PASS Instance count 3 with three objects
+[ 73] PASS Instance count 2 after pq3 destroyed
+[ 74] PASS Instance count 0 after all destroyed
+[ 75] PASS Instance count 1 after creating original
+[ 76] PASS Instance count 2 after copy constructor
+[ 77] PASS Instance count 0 after both destroyed
+[ 78] PASS Instance count 2 before assignment
+[ 79] PASS Instance count still 2 after assignment (not a new object)
+[ 80] PASS Instance count 0 after cleanup
+[ 81] PASS Instance count 5 with array of 5 objects
+[ 82] PASS Instance count 0 after array destroyed (no memory leak)
 
 --- Suite 17: Node Memory Leak Detection ---
 
-[ 74] PASS Node count 1 after single insert
-[ 75] PASS Node count returns to 0 after queue destroyed (no leak)
-[ 76] PASS Node count 1 after 1st insert
-[ 77] PASS Node count 2 after 2nd insert
-[ 78] PASS Node count 3 after 3rd insert
-[ 79] PASS All nodes destroyed with queue
-[ 80] PASS Node count 3 before dequeue
-[ 81] PASS Node count 2 after 1st dequeue
-[ 82] PASS Node count 1 after 2nd dequeue
-[ 83] PASS Node count 0 after dequeueing all
-[ 84] PASS No lingering nodes
-[ 85] PASS Node count 4 before clear
-[ 86] PASS Node count 0 after clear (no leaks)
-[ 87] PASS Node count 3 before removal
-[ 88] PASS Node count 2 after removing middle node
-[ 89] PASS Node count 1 after removing head
-[ 90] PASS Node count 0 after removing last node
-[ 91] PASS Original has 2 nodes
-[ 92] PASS Copy has 2 new nodes (4 total)
-[ 93] PASS All nodes destroyed (no leak)
-[ 94] PASS pq1 has 2 nodes
-[ 95] PASS pq2 added 1 node (3 total)
-[ 96] PASS After assignment, 4 nodes total (pq1 has 2, pq2 now has 2 from deep copy)
-[ 97] PASS All nodes destroyed
-[ 98] PASS Node count 20 after 20 inserts
-[ 99] PASS Node count 10 after 10 dequeues
-[100] PASS Node count 0 after clear (stress test)
-[101] PASS No lingering nodes after stress test
+[ 83] PASS Node count 1 after single insert
+[ 84] PASS Node count returns to 0 after queue destroyed (no leak)
+[ 85] PASS Node count 1 after 1st insert
+[ 86] PASS Node count 2 after 2nd insert
+[ 87] PASS Node count 3 after 3rd insert
+[ 88] PASS All nodes destroyed with queue
+[ 89] PASS Node count 3 before dequeue
+[ 90] PASS Node count 2 after 1st dequeue
+[ 91] PASS Node count 1 after 2nd dequeue
+[ 92] PASS Node count 0 after dequeueing all
+[ 93] PASS No lingering nodes
+[ 94] PASS Node count 4 before clear
+[ 95] PASS Node count 0 after clear (no leaks)
+[ 96] PASS Node count 3 before removal
+[ 97] PASS Node count 2 after removing middle node
+[ 98] PASS Node count 1 after removing head
+[ 99] PASS Node count 0 after removing last node
+[100] PASS Original has 2 nodes
+[101] PASS Copy has 2 new nodes (4 total)
+[102] PASS All nodes destroyed (no leak)
+[103] PASS pq1 has 2 nodes
+[104] PASS pq2 added 1 node (3 total)
+[105] PASS After assignment, 4 nodes total (pq1 has 2, pq2 now has 2 from deep copy)
+[106] PASS All nodes destroyed
+[107] PASS Node count 20 after 20 inserts
+[108] PASS Node count 10 after 10 dequeues
+[109] PASS Node count 0 after clear (stress test)
+[110] PASS No lingering nodes after stress test
 
 --- Suite 18: Combined Memory Integrity Check ---
 
-[102] PASS Instance count 3
-[103] PASS Node count 4 from all queues
-[104] PASS Node count 3 after assignment: pq1 (1 from copy), pq2 (1 original), pq3 (1)
-[105] PASS Node count 2 after dequeue from pq1: pq2 (1), pq3 (1)
-[106] PASS All instances destroyed.
-[107] PASS All nodes destroyed.
+[111] PASS Instance count 3
+[112] PASS Node count 4 from all queues
+[113] PASS Node count 3 after assignment: pq1 (1 from copy), pq2 (1 original), pq3 (1)
+[114] PASS Node count 2 after dequeue from pq1: pq2 (1), pq3 (1)
+[115] PASS All instances destroyed.
+[116] PASS All nodes destroyed.
 
 
 ========== Test Summary ==========
-Total tests run: 107
-Tests passed:   107
+Total tests run: 116
+Tests passed:   116
 Tests failed:   0
 Success rate:   100%
 

@@ -8,7 +8,7 @@ using namespace pqueue;
 
 void displayMenu() {
     cout << "\n========================================" << endl;
-    cout << "   PriorityQueue Interactive Menu" << endl;
+    cout << "          PriorityQueue  Menu" << endl;
     cout << "========================================" << endl;
     cout << "1. Insert element (data, priority)" << endl;
     cout << "2. Peek (view highest priority element)" << endl;

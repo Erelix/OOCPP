@@ -31,6 +31,9 @@ public:
     
     bool isEmpty() const;
     
+    PriorityQueue operator+(const std::pair<int, int> &element) const;
+    PriorityQueue operator-(int data) const;
+    
     PriorityQueue& operator+=(const std::pair<int, int> &element);
     PriorityQueue& operator-=(int data);
     

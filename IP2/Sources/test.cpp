@@ -123,6 +123,25 @@ int main() {
 
 
     {
+        string sectionName = "--- Suite 4a: Operator + (Non-modifying Insert) ---";
+        cout << sectionName << endl;
+        logFile << sectionName << endl << endl;
+
+        PriorityQueue pq;
+        pq.insert(100, 1);
+        pq.insert(200, 2);
+
+        PriorityQueue pq_new = pq + make_pair(50, 0);
+        TEST(pq.size() == 2, "Original size unchanged");
+        TEST(pq_new.size() == 3, "New queue has size 3");
+        TEST(pq_new.peek() == 50, "New element has highest priority");
+        TEST(pq.peek() == 100, "Original peek unchanged");
+
+        logFile << endl;
+    }
+
+
+    {
         string sectionName = "\n--- Suite 5: Operator -= (Delete) ---";
         cout << sectionName << endl;
         logFile << sectionName << endl << endl;
@@ -139,6 +158,27 @@ int main() {
         pq -= 10;
         TEST(pq.size() == 1, "Size is 1");
         TEST(pq.peek() == 30, "Remaining element is correct");
+
+        logFile << endl;
+    }
+
+
+    {
+        string sectionName = "\n--- Suite 5a: Operator - (Non-modifying Delete) ---";
+        cout << sectionName << endl;
+        logFile << sectionName << endl << endl;
+
+        PriorityQueue pq;
+        pq.insert(10, 1);
+        pq.insert(20, 2);
+        pq.insert(30, 3);
+
+        PriorityQueue pq_removed = pq - 20;
+        TEST(pq.size() == 3, "Original size unchanged");
+        TEST(pq_removed.size() == 2, "New queue has size 2");
+        TEST(pq[20] == 2, "Original still contains element 20");
+        TEST(pq_removed[20] == -1, "New queue doesn't have element 20");
+        TEST(pq_removed.peek() == 10, "New queue peek is correct");
 
         logFile << endl;
     }

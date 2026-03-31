@@ -15,13 +15,6 @@
 #include <cmath>
 #include <cctype>
 
-#include <vector>
-#include <set>
-#include <map>
-
-#include <functional>
-#include <algorithm>
-
 #include "./exceptions.h"
 #include "./priorityqueue.h"
 
