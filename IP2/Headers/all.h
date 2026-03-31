@@ -22,7 +22,7 @@
 #include <functional>
 #include <algorithm>
 
-#include "exception/exceptions.h"
-#include "pqueue/priorityqueue.h"
+#include "./exceptions.h"
+#include "./priorityqueue.h"
 
 #endif

@@ -3,7 +3,7 @@
 
 #include <string>
 #include <ostream>
-#include "../../Headers/exception/exceptions.h"
+#include "./exceptions.h"
 
 namespace pqueue {
 
@@ -55,10 +55,7 @@ public:
     
     void print() const;
 
-    // Memory tracking - static counter for all instances
     static int getInstanceCount();
-
-    // Node memory tracking - static counter for all internal nodes
     static int getNodeCount();
 
     friend std::ostream& operator<<(std::ostream &out, const PriorityQueue &pq);

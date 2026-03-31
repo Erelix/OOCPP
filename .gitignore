@@ -1,11 +1,8 @@
-# Ignore the intentionally broken version
 P1/EventTicket_WithErrors.cpp
 
-# Compiled object files
 *.o
 *.obj
 
-# Executables
 *.exe
 *.out
 P1/EventTicket
@@ -13,7 +10,6 @@ P1/P1
 practise/test
 practise/P2/simple
 
-# Debug files
 *.dSYM/
 *.su
 *.idb
