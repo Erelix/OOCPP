@@ -97,24 +97,24 @@ public:
     int operator%=(const std::pair<int, int> &updatePair);
 
 
-    // All based on queue SIZE, not element content
+    // Element-based lexicographical comparison
     
-    /// Size equality: true if both queues have same number of elements
+    /// Equality: true if both queues have exactly same elements and priorities
     bool operator==(const PriorityQueue &other) const;
     
-    /// Size inequality: true if queues have different sizes
+    /// Inequality: true if queues differ in elements or priorities
     bool operator!=(const PriorityQueue &other) const;
     
-    /// Size less than: true if this queue has fewer elements
+    /// Lexicographical less than: compares elements in order (data then priority)
     bool operator<(const PriorityQueue &other) const;
     
-    /// Size less or equal: true if this queue size <= other queue size
+    /// Lexicographical less or equal: true if less than or equal
     bool operator<=(const PriorityQueue &other) const;
     
-    /// Size greater than: true if this queue has more elements
+    /// Lexicographical greater than: compares elements in order (data then priority)
     bool operator>(const PriorityQueue &other) const;
     
-    /// Size greater or equal: true if this queue size >= other queue size
+    /// Lexicographical greater or equal: true if greater than or equal
     bool operator>=(const PriorityQueue &other) const;
 
     

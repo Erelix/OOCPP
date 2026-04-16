@@ -166,6 +166,35 @@ public:
         return true;
     }
 
+    int compare(const Inner &other) const {
+        Node *current1 = head;
+        Node *current2 = other.head;
+
+        while (current1 != nullptr && current2 != nullptr) {
+            // Compare data
+            if (current1->data < current2->data)
+                return -1;
+            if (current1->data > current2->data) 
+                return 1;
+            
+            // If data equal, compare priority
+            if (current1->priority < current2->priority) 
+                return -1;
+            if (current1->priority > current2->priority) 
+                return 1;
+            
+            current1 = current1->next;
+            current2 = current2->next;
+        }
+
+        // If one queue is shorter, it's "less than" the longer one
+        if (current1 == nullptr && current2 != nullptr) 
+            return -1;
+        if (current1 != nullptr && current2 == nullptr) 
+            return 1;
+        return 0;
+    }
+
     string toString() const {
         stringstream ss;
         ss << "PriorityQueue[size=" << elementCount << ", elements=[";
@@ -281,7 +310,7 @@ int PriorityQueue::operator%=(const std::pair<int, int> &updatePair) {
 }
 
 bool PriorityQueue::operator==(const PriorityQueue &other) const {
-    return impl->size() == other.impl->size();
+    return impl->equals(*other.impl);
 }
 
 bool PriorityQueue::operator!=(const PriorityQueue &other) const {
@@ -289,19 +318,19 @@ bool PriorityQueue::operator!=(const PriorityQueue &other) const {
 }
 
 bool PriorityQueue::operator<(const PriorityQueue &other) const {
-    return impl->size() < other.impl->size();
+    return impl->compare(*other.impl) < 0;
 }
 
 bool PriorityQueue::operator<=(const PriorityQueue &other) const {
-    return impl->size() <= other.impl->size();
+    return impl->compare(*other.impl) <= 0;
 }
 
 bool PriorityQueue::operator>(const PriorityQueue &other) const {
-    return impl->size() > other.impl->size();
+    return impl->compare(*other.impl) > 0;
 }
 
 bool PriorityQueue::operator>=(const PriorityQueue &other) const {
-    return impl->size() >= other.impl->size();
+    return impl->compare(*other.impl) >= 0;
 }
 
 void PriorityQueue::operator!() {
