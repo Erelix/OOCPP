@@ -23,8 +23,6 @@ private:
     class Inner;
     Inner *impl;
 
-    static int instanceCount;
-
 public:
     
     /// Default constructor - creates empty priority queue

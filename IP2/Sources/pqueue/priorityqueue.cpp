@@ -24,15 +24,20 @@ private:
 
     Node *head;
     int elementCount;
+    static int instanceCount;
 
 public:
-    Inner() : head(nullptr), elementCount(0) {}
+    Inner() : head(nullptr), elementCount(0) {
+        instanceCount++;
+    }
     
     ~Inner() {
         clear();
+        instanceCount--;
     }
     
     Inner(const Inner &other) : head(nullptr), elementCount(0) {
+        instanceCount++;
         Node *current = other.head;
         while (current != nullptr) {
             insert(current->data, current->priority);
@@ -177,6 +182,10 @@ public:
         return ss.str();
     }
 
+    static int getInstanceCountValue() {
+        return instanceCount;
+    }
+
     void print() const {
         cout << toString() << endl;
     }
@@ -201,14 +210,12 @@ int PriorityQueue::Inner::Node::nodeCount = 0;
 
 
 
-int PriorityQueue::instanceCount = 0;
+int PriorityQueue::Inner::instanceCount = 0;
 
 PriorityQueue::PriorityQueue() : impl(new Inner()) {
-    instanceCount++;
 }
 
 PriorityQueue::PriorityQueue(const PriorityQueue &other) : impl(new Inner(*other.impl)) {
-    instanceCount++;
 }
 
 const PriorityQueue& PriorityQueue::operator=(const PriorityQueue &other) {
@@ -221,7 +228,6 @@ const PriorityQueue& PriorityQueue::operator=(const PriorityQueue &other) {
 
 PriorityQueue::~PriorityQueue() {
     delete impl;
-    instanceCount--;
 }
 
 void PriorityQueue::insert(int data, int priority) {
@@ -320,7 +326,7 @@ ostream& operator<<(ostream &out, const PriorityQueue &pq) {
 }
 
 int PriorityQueue::getInstanceCount() {
-    return instanceCount;
+    return Inner::getInstanceCountValue();
 }
 
 int PriorityQueue::getNodeCount() {
