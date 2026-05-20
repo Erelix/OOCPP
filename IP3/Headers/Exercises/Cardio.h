@@ -3,7 +3,6 @@
 
 #include "Exercise.h"
 
-/// Formula: (heart_rate - 60) * 0.5 * duration
 class Cardio : public Exercise {
 private:
     int heartRate; // beats per minute
@@ -15,7 +14,8 @@ public:
     Cardio& operator=(const Cardio& other) = delete;
 
     ~Cardio() override;
-    
+
+    // Formula: (heart_rate - 60) * 0.5 * duration
     double calculateCaloriesBurned(int duration) const override;
 
     Exercise* clone() const override;

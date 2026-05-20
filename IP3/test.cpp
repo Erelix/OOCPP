@@ -218,16 +218,26 @@ int main() {
     std::cout << "   Cardio: " << cardioResult << " | Strength: " << strengthResult << std::endl;
 
 
-    // Stretch Tests - not implemented
-    std::cout << "\n--- Stretch Class Tests (Not Yet Implemented) ---" << std::endl;
-    std::cout << "The Stretch class will be implemented with the following specifications:" << std::endl;
-    std::cout << "1. Constructor: Stretch(name, duration, flexibilityLevel, targetArea)" << std::endl;
-    std::cout << "2. calculateCaloriesBurned() throws NotImplementedException" << std::endl;
-    std::cout << "3. clone() method for Prototype pattern" << std::endl;
-    std::cout << "4. display() method showing all Stretch properties" << std::endl;
-    std::cout << "5. getFlexibilityLevel() and getTargetArea() accessors" << std::endl;
+    // std::cout << "\n--- Stretch Class Tests ---" << std::endl;
 
+    // Stretch yoga("Yoga", 40, 8, "Hamstrings");
 
+    // test("Stretch name", yoga.getName() == "Yoga");
+    // test("Stretch duration", yoga.getDuration() == 40);
+    // test("Stretch flexibility level", yoga.getFlexibilityLevel() == 8);
+    // test("Stretch target area", yoga.getTargetArea() == "Hamstrings");
+
+    // Exercise* stretchPtr = &yoga;
+    // try {
+    //     stretchPtr->calculateCaloriesBurned(40);
+    //     test("Stretch throws NotImplementedException", false);
+    // } catch (const NotImplementedException&) {
+    //     test("Stretch throws NotImplementedException", true);
+    // }
+
+    // Exercise* stretchClone = yoga.clone();
+    // test("Stretch clone type", dynamic_cast<Stretch*>(stretchClone) != nullptr);
+    // delete stretchClone;
 
     std::cout << "\n=== Test Summary ===" << std::endl;
     std::cout << "Tests run: " << testsRun << std::endl;

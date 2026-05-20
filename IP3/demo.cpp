@@ -38,6 +38,7 @@ int main() {
                   return *a < *b; 
               });
     
+    // "one method in the container that passes through all the objects in the container"
     program.displayAll();
 
     // deep copy
@@ -66,7 +67,6 @@ int main() {
         [](const Exercise* ex) { return ex->getDuration() >= 25; }
     );
     
-    // "one method in the container that passes through all the objects in the container"
     std::cout << "Exercises with duration >= 25 minutes:" << std::endl;
     for (const auto& ex : filtered) {
         ex->display();

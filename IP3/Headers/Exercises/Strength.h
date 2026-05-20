@@ -3,7 +3,6 @@
 
 #include "Exercise.h"
 
-/// Formula: sets * reps * (weight / 10) * 0.1 * duration
 class Strength : public Exercise {
 private:
     int sets;
@@ -18,6 +17,7 @@ public:
 
     ~Strength() override;
     
+    // Formula: sets * reps * (weight / 10) * 0.1 * duration
     double calculateCaloriesBurned(int duration) const override;
 
     Exercise* clone() const override;

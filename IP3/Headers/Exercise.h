@@ -20,8 +20,8 @@ public:
 
     virtual ~Exercise();
 
-    // duration(min)
-    // returns calories burned(approximately)
+    /// duration(min)
+    /// returns calories burned(approximately)
     virtual double calculateCaloriesBurned(int duration) const = 0;
 
     std::string getName() const;

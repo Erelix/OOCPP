@@ -15,15 +15,6 @@
  * - Implement display() method showing stretch type, flexibility level, and target area
  * - Implement comparison by flexibility level
  * 
- * Usage example (from test.cpp):
- *   Stretch* stretch = new Stretch("Full Body Stretch", 15, 5, "full_body");
- *   try {
- *       double calories = stretch->calculateCaloriesBurned(15);
- *   } catch (const NotImplementedException& e) {
- *       std::cout << "Stretch calories calculation not yet implemented" << std::endl;
- *   }
- *   stretch->display(); // Output: Stretch: Full Body Stretch | Target: full_body | Flexibility: 5
- * 
  * Constructor parameters:
  * - name (std::string): Name of the stretch routine
  * - duration (int): Duration in minutes

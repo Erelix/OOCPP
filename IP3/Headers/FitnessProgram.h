@@ -9,7 +9,7 @@
 #include "exceptions.h"
 
 /**
- * This container holds pointers to exercises and provides:
+ * Holds pointers to exercises and provides:
  * - CRUD operations
  * - Strategy pattern for different computations
  * - Callback support for filtering exercises
@@ -75,10 +75,10 @@ public:
         Exercise** operator->() const;
 
         /// Increment/Decrement
-        Iterator& operator++();    // Pre-increment
-        Iterator operator++(int);  // Post-increment
-        Iterator& operator--();    // Pre-decrement
-        Iterator operator--(int);  // Post-decrement
+        Iterator& operator++(); // Pre-increment
+        Iterator operator++(int); // Post-increment
+        Iterator& operator--(); // Pre-decrement
+        Iterator operator--(int); // Post-decrement
 
         /// Random access
         Iterator& operator+=(difference_type n);
