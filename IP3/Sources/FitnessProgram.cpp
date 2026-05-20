@@ -4,11 +4,6 @@
 
 FitnessProgram::FitnessProgram() : currentStrategy(nullptr) {}
 
-FitnessProgram::~FitnessProgram() {
-    clear();
-    delete currentStrategy;
-}
-
 FitnessProgram::FitnessProgram(const FitnessProgram& other) : currentStrategy(nullptr) {
     for (const auto& exercise : other.exercises) {
         exercises.push_back(exercise->clone());
@@ -26,6 +21,11 @@ FitnessProgram& FitnessProgram::operator=(const FitnessProgram& other) {
         }
     }
     return *this;
+}
+
+FitnessProgram::~FitnessProgram() {
+    clear();
+    delete currentStrategy;
 }
 
 void FitnessProgram::addExercise(const Exercise* exercise) {

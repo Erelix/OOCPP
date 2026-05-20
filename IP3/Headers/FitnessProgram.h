@@ -21,11 +21,12 @@ public:
     class Iterator;
 
     FitnessProgram();
-    ~FitnessProgram();
 
     /// Copy constructor and assignment (deep copy)
     FitnessProgram(const FitnessProgram& other);
     FitnessProgram& operator=(const FitnessProgram& other);
+
+    ~FitnessProgram();
 
     /// CRUD operations
     void addExercise(const Exercise* exercise);
