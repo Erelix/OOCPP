@@ -11,26 +11,12 @@ private:
 public:
     Cardio(const std::string& name, int duration, int heartRate);
     
-    /**
-     * @brief Calculate calories burned during cardio exercise
-     * @param duration Duration in minutes
-     * @return Calories burned
-     */
     double calculateCaloriesBurned(int duration) const override;
 
-    /**
-     * @brief Polymorphic copy (Prototype pattern)
-     */
     Exercise* clone() const override;
 
-    /**
-     * @brief Display cardio exercise information
-     */
     void display() const override;
 
-    /**
-     * @brief Get heart rate
-     */
     int getHeartRate() const;
 };
 
