@@ -4,12 +4,14 @@
 Strength::Strength(const std::string& name, int duration, int sets, int reps, double weight)
     : Exercise(name, duration), sets(sets), reps(reps), weight(weight) {}
 
+Strength::~Strength() = default;
+
 double Strength::calculateCaloriesBurned(int duration) const {
     return sets * reps * (weight / 10.0) * 0.1 * duration;
 }
 
 Exercise* Strength::clone() const {
-    return new Strength(*this);
+    return new Strength(name, duration, sets, reps, weight);
 }
 
 void Strength::display() const {

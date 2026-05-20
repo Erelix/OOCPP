@@ -7,7 +7,7 @@
 
 class ComputeStrategy {
 public:
-    virtual ~ComputeStrategy() = default;
+    virtual ~ComputeStrategy();
 
     /// exercises - Vector of pointers to exercises
     /// returns computed statistic value
@@ -20,21 +20,21 @@ public:
 class TotalCaloriesStrategy : public ComputeStrategy {
 public:
     double compute(const std::vector<Exercise*>& exercises) const override;
-    std::string getName() const override { return "Total Calories"; }
+    std::string getName() const override;
 };
 
 /// Strategy to compute maximum calories burned in a single exercise
 class MaxCaloriesStrategy : public ComputeStrategy {
 public:
     double compute(const std::vector<Exercise*>& exercises) const override;
-    std::string getName() const override { return "Maximum Calories"; }
+    std::string getName() const override;
 };
 
 /// Strategy to compute average calories burned per exercise
 class AverageCaloriesStrategy : public ComputeStrategy {
 public:
     double compute(const std::vector<Exercise*>& exercises) const override;
-    std::string getName() const override { return "Average Calories"; }
+    std::string getName() const override;
 };
 
 #endif

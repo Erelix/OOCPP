@@ -12,6 +12,11 @@ private:
 
 public:
     Strength(const std::string& name, int duration, int sets, int reps, double weight);
+
+    Strength(const Strength& other) = delete;
+    Strength& operator=(const Strength& other) = delete;
+
+    ~Strength() override;
     
     double calculateCaloriesBurned(int duration) const override;
 

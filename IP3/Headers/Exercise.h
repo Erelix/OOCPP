@@ -15,7 +15,10 @@ public:
 
     Exercise(const std::string& name, int duration);
 
-    virtual ~Exercise() = default;
+    Exercise(const Exercise& other) = delete;
+    Exercise& operator=(const Exercise& other) = delete;
+
+    virtual ~Exercise();
 
     // duration(min)
     // returns calories burned(approximately)

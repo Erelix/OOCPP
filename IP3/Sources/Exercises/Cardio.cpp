@@ -4,12 +4,14 @@
 Cardio::Cardio(const std::string& name, int duration, int heartRate)
     : Exercise(name, duration), heartRate(heartRate) {}
 
+Cardio::~Cardio() = default;
+
 double Cardio::calculateCaloriesBurned(int duration) const {
     return (heartRate - 60) * 0.5 * duration;
 }
 
 Exercise* Cardio::clone() const {
-    return new Cardio(*this);
+    return new Cardio(name, duration, heartRate);
 }
 
 void Cardio::display() const {

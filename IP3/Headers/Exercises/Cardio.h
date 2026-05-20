@@ -10,6 +10,11 @@ private:
 
 public:
     Cardio(const std::string& name, int duration, int heartRate);
+
+    Cardio(const Cardio& other) = delete;
+    Cardio& operator=(const Cardio& other) = delete;
+
+    ~Cardio() override;
     
     double calculateCaloriesBurned(int duration) const override;
 
