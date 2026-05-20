@@ -17,6 +17,10 @@
  * - Deep copy capability(Prototype pattern)
  */
 class FitnessProgram {
+private:
+    std::vector<Exercise*> exercises;
+    ComputeStrategy* currentStrategy;
+
 public:
     class Iterator;
 
@@ -98,10 +102,6 @@ public:
         std::vector<Exercise*>* data;
         size_t pos;
     };
-
-private:
-    std::vector<Exercise*> exercises;
-    ComputeStrategy* currentStrategy;
 };
 
 #endif

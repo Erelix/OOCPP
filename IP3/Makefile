@@ -3,7 +3,8 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -g
 INCLUDE = -IHeaders
 
 SOURCES = Sources/Exercise.cpp Sources/Exercises/Cardio.cpp Sources/Exercises/Strength.cpp \
-          Sources/ComputeStrategy.cpp Sources/FitnessProgram.cpp
+          Sources/Exercises/Stretch.cpp Sources/ComputeStrategy.cpp Sources/FitnessProgram.cpp \
+          Sources/exceptions.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 MODULE_OBJ = module.o
 
