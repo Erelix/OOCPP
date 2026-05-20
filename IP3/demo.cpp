@@ -30,7 +30,8 @@ int main() {
     for (auto it = program.begin(); it != program.end(); ++it) {
         std::cout << i++ << ". "<<"Calories burned: " << (*it)->calculateCaloriesBurned((*it)->getDuration()) << " cal" << std::endl;
     }
-
+    
+    // iterator
     std::cout << "\nUsing Iterator with std::sort" << std::endl;
     std::sort(program.begin(), program.end(), 
               [](const Exercise* a, const Exercise* b) { 
@@ -39,12 +40,13 @@ int main() {
     
     program.displayAll();
 
+    // deep copy
     std::cout << "\nDeep Copy" << std::endl;
     FitnessProgram programCopy = program;
     std::cout << "Original program size: " << program.size() << std::endl;
     std::cout << "Copied program size: " << programCopy.size() << std::endl;
 
-
+    // strategy
     std::cout << "\nStrategy Pattern" << std::endl;
     program.setComputeStrategy(new TotalCaloriesStrategy());
     std::cout << "Strategy: " << program.getCurrentStrategyName() << std::endl;
@@ -58,11 +60,13 @@ int main() {
     std::cout << "Strategy: " << program.getCurrentStrategyName() << std::endl;
     std::cout << "Result: " << program.compute() << " calories" << std::endl;
 
+    // callback
     std::cout << "\nCallback Filter Demo" << std::endl;
     std::vector<Exercise*> filtered = program.filter(
         [](const Exercise* ex) { return ex->getDuration() >= 25; }
     );
     
+    // "one method in the container that passes through all the objects in the container"
     std::cout << "Exercises with duration >= 25 minutes:" << std::endl;
     for (const auto& ex : filtered) {
         ex->display();
