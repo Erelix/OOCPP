@@ -6,14 +6,12 @@
 
 class NotImplementedException : public std::runtime_error {
 public:
-    explicit NotImplementedException(const std::string& message = "Feature not implemented")
-        : std::runtime_error(message) {}
+    explicit NotImplementedException(const std::string& message = "Feature not implemented");
 };
 
 class StrategyNotSetException : public std::runtime_error {
 public:
-    explicit StrategyNotSetException(const std::string& message = "Strategy not set")
-        : std::runtime_error(message) {}
+    explicit StrategyNotSetException(const std::string& message = "Strategy not set");
 };
 
 #endif
